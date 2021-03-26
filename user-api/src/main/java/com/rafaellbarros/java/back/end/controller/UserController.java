@@ -2,6 +2,7 @@ package com.rafaellbarros.java.back.end.controller;
 
 import com.rafaellbarros.java.back.end.model.dto.UserDTO;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +23,17 @@ public class UserController {
     @GetMapping("/users")
     public List<UserDTO> getUsers() {
         return usuarios;
+    }
+
+
+    @GetMapping("/users/{cpf}")
+    public UserDTO getUsersFiltro(@PathVariable String cpf) {
+        for (UserDTO userFilter: usuarios) {
+            if (userFilter.getCpf().equals(cpf)) {
+                return  userFilter;
+            }
+        }
+        return  null;
     }
 
     @PostConstruct
