@@ -1,7 +1,7 @@
 package com.rafaellbarros.java.back.end.controller;
 
 import com.rafaellbarros.java.back.end.model.dto.UserDTO;
-import org.apache.catalina.User;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +44,17 @@ public class UserController {
         userDTO.setDataCadastro(new Date());
         usuarios.add(userDTO);
         return userDTO;
+    }
+
+    @DeleteMapping("/user/{cpf}")
+    public boolean remover(@PathVariable String cpf) {
+        for (UserDTO userFilter: usuarios) {
+            if (userFilter.getCpf().equals(cpf)) {
+                usuarios.remove(userFilter);
+                return  true;
+            }
+        }
+        return  false;
     }
 
     @PostConstruct
