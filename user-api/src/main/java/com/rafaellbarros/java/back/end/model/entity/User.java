@@ -1,11 +1,19 @@
-package com.rafaellbarros.java.back.end.model.dto;
+package com.rafaellbarros.java.back.end.model.entity;
 
-import com.rafaellbarros.java.back.end.model.entity.User;
+import com.rafaellbarros.java.back.end.model.dto.UserDTO;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
-public class UserDTO {
+@Entity
+public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String nome;
     private String cpf;
     private String endereco;
@@ -13,15 +21,23 @@ public class UserDTO {
     private String telefone;
     private Date dataCadastro;
 
-    public static UserDTO convert(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setNome(user.getNome());
-        userDTO.setEndereco(user.getEndereco());
-        userDTO.setCpf(user.getCpf());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setTelefone(user.getTelefone());
-        userDTO.setDataCadastro(user.getDataCadastro());
-        return userDTO;
+    public static User convert(UserDTO userDTO) {
+        User user = new User();
+        user.setNome(userDTO.getNome());
+        user.setEndereco(userDTO.getEndereco());
+        user.setCpf(userDTO.getCpf());
+        user.setEmail(userDTO.getEmail());
+        user.setTelefone(userDTO.getTelefone());
+        user.setDataCadastro(new Date());
+        return user;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
