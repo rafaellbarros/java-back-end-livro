@@ -1,10 +1,14 @@
 package com.rafaellbarros.java.back.end.service;
 
 import com.rafaellbarros.java.back.end.model.dto.ShopDTO;
+import com.rafaellbarros.java.back.end.model.dto.ShopReportDTO;
 import com.rafaellbarros.java.back.end.model.entity.Shop;
 import com.rafaellbarros.java.back.end.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +20,7 @@ public class ShopService {
 
     @Autowired
     private ShopRepository shopRepository;
+
     public List<ShopDTO> getAll() {
         List<Shop> shops = shopRepository.findAll();
         return shops
@@ -23,6 +28,7 @@ public class ShopService {
                 .map(ShopDTO::convert)
                 .collect(Collectors.toList());
     }
+
     public List<ShopDTO> getByUser(String userIdentifier) {
         List<Shop> shops = shopRepository.findAllByUserIdentifier(userIdentifier);
         return shops
@@ -30,6 +36,7 @@ public class ShopService {
                 .map(ShopDTO::convert)
                 .collect(Collectors.toList());
     }
+
     public List<ShopDTO> getByDate(ShopDTO shopDTO) {
         List<Shop> shops = shopRepository.findAllByDateGreaterThan(shopDTO.getDate());
         return shops
@@ -37,6 +44,7 @@ public class ShopService {
                 .map(ShopDTO::convert)
                 .collect(Collectors.toList());
     }
+
     public ShopDTO findById(long ProductId) {
         Optional<Shop> shop = shopRepository.findById(ProductId);
         if (shop.isPresent()) {
@@ -56,4 +64,6 @@ public class ShopService {
         shop = shopRepository.save(shop);
         return ShopDTO.convert(shop);
     }
+
+
 }
