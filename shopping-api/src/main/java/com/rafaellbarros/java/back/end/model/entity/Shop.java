@@ -1,7 +1,5 @@
 package com.rafaellbarros.java.back.end.model.entity;
 
-import com.rafaellbarros.java.back.end.model.dto.ShopDTO;
-
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -12,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity(name="shop")
 public class Shop {
@@ -27,21 +24,6 @@ public class Shop {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "item", joinColumns = @JoinColumn(name = "shop_id"))
     private List<Item> items;
-
-    public static Shop convert(ShopDTO shopDTO) {
-        Shop shop = new Shop();
-        shop.setUserIdentifier(shopDTO.getUserIdentifier());
-        shop.setTotal(shopDTO.getTotal());
-        shop.setDate(shopDTO.getDate());
-        shop.setItems(shopDTO
-                .getItems()
-                .stream()
-                .map(Item::convert)
-                .collect(Collectors.toList()));
-        return shop;
-    }
-
-
 
     public long getId() {
         return id;

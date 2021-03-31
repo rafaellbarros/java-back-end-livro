@@ -1,14 +1,11 @@
 package com.rafaellbarros.java.back.end.service;
 
+import com.rafaellbarros.java.back.end.model.converter.DTOConverter;
 import com.rafaellbarros.java.back.end.model.dto.ShopDTO;
-import com.rafaellbarros.java.back.end.model.dto.ShopReportDTO;
 import com.rafaellbarros.java.back.end.model.entity.Shop;
 import com.rafaellbarros.java.back.end.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -25,7 +22,7 @@ public class ShopService {
         List<Shop> shops = shopRepository.findAll();
         return shops
                 .stream()
-                .map(ShopDTO::convert)
+                .map(DTOConverter::shopToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -33,7 +30,7 @@ public class ShopService {
         List<Shop> shops = shopRepository.findAllByUserIdentifier(userIdentifier);
         return shops
                 .stream()
-                .map(ShopDTO::convert)
+                .map(DTOConverter::shopToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -41,14 +38,14 @@ public class ShopService {
         List<Shop> shops = shopRepository.findAllByDateGreaterThan(shopDTO.getDate());
         return shops
                 .stream()
-                .map(ShopDTO::convert)
+                .map(DTOConverter::shopToDTO)
                 .collect(Collectors.toList());
     }
 
     public ShopDTO findById(long ProductId) {
         Optional<Shop> shop = shopRepository.findById(ProductId);
         if (shop.isPresent()) {
-            return ShopDTO.convert(shop.get());
+            return DTOConverter.shopToDTO(shop.get());
         }
         return null;
     }
@@ -59,10 +56,10 @@ public class ShopService {
                 .map(x -> x.getPrice())
                 .reduce((float) 0, Float::sum));
 
-        Shop shop = Shop.convert(shopDTO);
+        Shop shop = DTOConverter.shopToEntity(shopDTO);
         shop.setDate(new Date());
         shop = shopRepository.save(shop);
-        return ShopDTO.convert(shop);
+        return DTOConverter.shopToDTO(shop);
     }
 
 
