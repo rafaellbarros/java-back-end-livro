@@ -1,5 +1,6 @@
 package com.rafaellbarros.java.back.end.service;
 
+import com.rafaellbarros.java.back.end.model.converter.DTOConverter;
 import com.rafaellbarros.java.back.end.model.dto.UserDTO;
 import com.rafaellbarros.java.back.end.model.entity.User;
 import com.rafaellbarros.java.back.end.repository.UserRepository;
@@ -18,23 +19,20 @@ public class UserService {
 
     public List<UserDTO> getAll() {
         List<User> usuarios = userRepository.findAll();
-        return usuarios
-                .stream()
-                .map(UserDTO::convert)
-                .collect(Collectors.toList());
+        return usuarios.stream().map(DTOConverter::toDTO).collect(Collectors.toList());
     }
 
     public UserDTO findById(long userId) {
         Optional<User> usuario = userRepository.findById(userId);
         if (usuario.isPresent()) {
-            return UserDTO.convert(usuario.get());
+            return DTOConverter.toDTO(usuario.get());
         }
         return null;
     }
 
     public UserDTO save(UserDTO userDTO) {
-        User user = userRepository.save(User.convert(userDTO));
-        return UserDTO.convert(user);
+        User user = userRepository.save(DTOConverter.toEntity(userDTO));
+        return DTOConverter.toDTO(user);
     }
 
     public UserDTO delete(long userId) {
@@ -48,7 +46,7 @@ public class UserService {
     public UserDTO findByCpf(String cpf) {
         User user = userRepository.findByCpf(cpf);
         if (user != null) {
-            return UserDTO.convert(user);
+            return DTOConverter.toDTO(user);
         }
         return null;
     }
@@ -57,7 +55,7 @@ public class UserService {
         List<User> usuarios = userRepository.queryByNomeLike(name);
         return usuarios
                 .stream()
-                .map(UserDTO::convert)
+                .map(DTOConverter::toDTO)
                 .collect(Collectors.toList());
     }
 }

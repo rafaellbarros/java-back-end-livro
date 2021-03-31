@@ -1,7 +1,5 @@
 package com.rafaellbarros.java.back.end.model.entity;
 
-import com.rafaellbarros.java.back.end.model.dto.UserDTO;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,17 +18,6 @@ public class User {
     private String email;
     private String telefone;
     private Date dataCadastro;
-
-    public static User convert(UserDTO userDTO) {
-        User user = new User();
-        user.setNome(userDTO.getNome());
-        user.setEndereco(userDTO.getEndereco());
-        user.setCpf(userDTO.getCpf());
-        user.setEmail(userDTO.getEmail());
-        user.setTelefone(userDTO.getTelefone());
-        user.setDataCadastro(new Date());
-        return user;
-    }
 
     public long getId() {
         return id;
