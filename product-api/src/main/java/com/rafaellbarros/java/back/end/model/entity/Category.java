@@ -1,7 +1,5 @@
 package com.rafaellbarros.java.back.end.model.entity;
 
-import com.rafaellbarros.java.back.end.model.dto.CategoryDTO;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,13 +12,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-
-    public static Category convert(CategoryDTO categoryDTO) {
-        Category category = new Category();
-        category.setId(categoryDTO.getId());
-        category.setNome(categoryDTO.getNome());
-        return category;
-    }
 
     public long getId() {
         return id;
