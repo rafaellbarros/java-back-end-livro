@@ -1,5 +1,7 @@
 package com.rafaellbarros.java.back.end.service;
 
+import com.rafaellbarros.java.back.end.exception.ProductNotFoundException;
+import com.rafaellbarros.java.back.end.exception.UserNotFoundException;
 import com.rafaellbarros.java.back.end.model.converter.DTOConverter;
 import com.rafaellbarros.java.back.end.model.dto.ItemDTO;
 import com.rafaellbarros.java.back.end.model.dto.ProductDTO;
@@ -46,17 +48,17 @@ public class ShopService {
         if (shop.isPresent()) {
             return DTOConverter.shopToDTO(shop.get());
         }
-        return null;
+        throw new ProductNotFoundException();
     }
 
     public ShopDTO save(ShopDTO shopDTO) {
 
         if (userService.getUserByCpf(shopDTO.getUserIdentifier()) == null) {
-            return null;
+            throw new UserNotFoundException();
         }
 
         if (!validateProducts(shopDTO.getItems())) {
-            return null;
+            throw new ProductNotFoundException();
         }
 
         shopDTO.setTotal(shopDTO.getItems()

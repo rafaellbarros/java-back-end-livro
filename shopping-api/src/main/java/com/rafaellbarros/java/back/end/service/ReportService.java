@@ -1,9 +1,9 @@
 package com.rafaellbarros.java.back.end.service;
 
+import com.rafaellbarros.java.back.end.model.converter.DTOConverter;
 import com.rafaellbarros.java.back.end.model.dto.ShopDTO;
 import com.rafaellbarros.java.back.end.model.dto.ShopReportDTO;
 import com.rafaellbarros.java.back.end.model.entity.Shop;
-import com.rafaellbarros.java.back.end.repository.ReportRepository;
 import com.rafaellbarros.java.back.end.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ReportService {
         List<Shop> shops = shopRepository.getShopByFilters(dataInicio, dataFim, valorMinimo);
         return shops
                 .stream()
-                .map(ShopDTO::convert)
+                .map(DTOConverter::shopToDTO)
                 .collect(Collectors.toList());
     }
 

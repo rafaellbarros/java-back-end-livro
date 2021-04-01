@@ -35,8 +35,7 @@ public class ShopController {
     @GetMapping("/shopping/shopByUser/{userIdentifier}")
     public List<ShopDTO> getShops(
             @PathVariable String userIdentifier) {
-        List<ShopDTO> produtos =
-                shopService.getByUser(userIdentifier);
+        List<ShopDTO> produtos = shopService.getByUser(userIdentifier);
         return produtos;
     }
 
