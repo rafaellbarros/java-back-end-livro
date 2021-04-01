@@ -6,6 +6,7 @@ import com.rafaellbarros.java.back.end.model.converter.DTOConverter;
 import com.rafaellbarros.java.back.end.model.dto.ItemDTO;
 import com.rafaellbarros.java.back.end.model.dto.ProductDTO;
 import com.rafaellbarros.java.back.end.model.dto.ShopDTO;
+import com.rafaellbarros.java.back.end.model.dto.UserDTO;
 import com.rafaellbarros.java.back.end.model.entity.Shop;
 import com.rafaellbarros.java.back.end.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +52,12 @@ public class ShopService {
         throw new ProductNotFoundException();
     }
 
-    public ShopDTO save(ShopDTO shopDTO) {
+    public ShopDTO save(ShopDTO shopDTO, String key) {
 
-        if (userService.getUserByCpf(shopDTO.getUserIdentifier()) == null) {
-            throw new UserNotFoundException();
-        }
+        UserDTO userDTO = userService
+                .getUserByCpf(shopDTO.getUserIdentifier(), key);
 
-        if (!validateProducts(shopDTO.getItems())) {
-            throw new ProductNotFoundException();
-        }
-
+        validateProducts(shopDTO.getItems());
         shopDTO.setTotal(shopDTO.getItems()
                 .stream()
                 .map(x -> x.getPrice())
