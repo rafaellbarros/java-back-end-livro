@@ -1,5 +1,6 @@
 package com.rafaellbarros.java.back.end.service;
 
+import com.rafaellbarros.java.back.end.exception.UserNotFoundException;
 import com.rafaellbarros.java.back.end.model.converter.DTOConverter;
 import com.rafaellbarros.java.back.end.model.dto.UserDTO;
 import com.rafaellbarros.java.back.end.model.entity.User;
@@ -48,7 +49,7 @@ public class UserService {
         if (user != null) {
             return DTOConverter.toDTO(user);
         }
-        return null;
+        throw new UserNotFoundException();
     }
 
     public List<UserDTO> queryByName(String name) {
