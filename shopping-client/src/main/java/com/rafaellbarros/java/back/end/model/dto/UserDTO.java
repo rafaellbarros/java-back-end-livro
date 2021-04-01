@@ -7,6 +7,7 @@ public class UserDTO {
     private String nome;
     private String cpf;
     private String endereco;
+    private String key;
     private String email;
     private String telefone;
     private Date dataCadastro;
@@ -33,6 +34,14 @@ public class UserDTO {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getEmail() {
