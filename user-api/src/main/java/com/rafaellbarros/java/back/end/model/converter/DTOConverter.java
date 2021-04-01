@@ -12,6 +12,7 @@ public class DTOConverter {
         userDTO.setNome(user.getNome());
         userDTO.setEndereco(user.getEndereco());
         userDTO.setCpf(user.getCpf());
+        userDTO.setKey(user.getKey());
         userDTO.setEmail(user.getEmail());
         userDTO.setTelefone(user.getTelefone());
         userDTO.setDataCadastro(user.getDataCadastro());
@@ -23,6 +24,7 @@ public class DTOConverter {
         user.setNome(userDTO.getNome());
         user.setEndereco(userDTO.getEndereco());
         user.setCpf(userDTO.getCpf());
+        user.setKey(userDTO.getKey());
         user.setEmail(userDTO.getEmail());
         user.setTelefone(userDTO.getTelefone());
         user.setDataCadastro(new Date());
